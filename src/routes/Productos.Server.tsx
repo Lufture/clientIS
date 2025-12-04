@@ -7,10 +7,9 @@ export async function action({ request }: ActionFunctionArgs) {
   console.log('se ejecuta')
   const data = Object.fromEntries(await request.formData());
   console.log(data)
-  const updatedProduct = await updateProductAvailability(data.id);
+  const updatedProduct = await updateProductAvailability(+data.id);
   console.log('Producto actualizado en action:', updatedProduct);
-  // Redirigir a la misma ruta para que React Router recargue el loader
-  return redirect('/');}
+  return updatedProduct;}
   catch(e){
     console.log('Error en action:', e);
     return { error: e };
