@@ -1,6 +1,8 @@
 import {createBrowserRouter} from 'react-router-dom';
 import Layout from './layouts/Layout';
 import Productos from './views/Productos';
+import Login from './views/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import NewProducto, {action as newProductoAction} from './views/NewProducto';
 import EditProducto, {loader as editProductoLoader, action as editProductAction} from './views/EditProducto';
@@ -9,30 +11,42 @@ import { action2 as deleteProductAction,loader as productosLoader, action as upd
 
 export const router = createBrowserRouter([
     {
-        path : '/',
-        element : <Layout/>,
-        children : [
+        path: '/login',
+        element:<Login/>
+    },
+
+    {
+        element: <ProtectedRoute/>,
+        children:[
             {
-                index : true,
-                element: <Productos/>,
-                loader: productosLoader,
-                action: updateAvailabilityAction
-            },
-            {
-                path : 'producto/nuevo',
-                element : <NewProducto/>,
-                action : newProductoAction
-            },
-            {
-                path : 'producto/:id/editar',//ROA pattern
-                element : <EditProducto/>,
-                loader : editProductoLoader,
-                action : editProductAction
-            },
-            {
-                path : 'producto/:id/eliminar',//ROA pattern
-                action: deleteProductAction
+                path : '/',
+                element : <Layout/>,
+                children : [
+                    {
+                        index : true,
+                        element: <Productos/>,
+                        loader: productosLoader,
+                        action: updateAvailabilityAction
+                    },
+                    {
+                        path : 'producto/nuevo',
+                        element : <NewProducto/>,
+                        action : newProductoAction
+                    },
+                    {
+                        path : 'producto/:id/editar',//ROA pattern
+                        element : <EditProducto/>,
+                        loader : editProductoLoader,
+                        action : editProductAction
+                    },
+                    {
+                        path : 'producto/:id/eliminar',//ROA pattern
+                        action: deleteProductAction
+                    }
+                ]
             }
         ]
-    },
+    }
+
+
 ])
